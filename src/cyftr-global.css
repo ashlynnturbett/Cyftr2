@@ -1,0 +1,198 @@
+@charset "UTF-8";
+
+body {
+	background-color: #F5F5F5;
+	font-family: sans-serif;
+}
+
+h2 {
+	font-weight: 600;
+}
+
+div#header {
+	height: 100px;
+}
+
+div#main {
+	margin-left: 200px;
+	margin-right: 100px;
+	min-height: 300px;
+}
+
+div#sidebar {
+	width: 120px;
+	position: absolute;
+	top: 110px;
+	min-height: 400px;
+}
+
+div#nav {
+	margin: 0 auto;
+	background-color: #FFFFFF;
+	width: 75px;
+	height: 305px;
+	border-radius: 60px 60px 60px 60px;
+}
+
+div#help {
+	margin: 0 auto;
+	background-color: #FFFFFF;
+	width: 75px;
+	height: 75px;
+	border-radius: 60px 60px 60px 60px;
+	position: fixed;
+	bottom: 0;
+	left: 31px;
+	
+	
+}
+
+div#logo {
+	width: 220px;
+	height: 50px;
+	margin: 20px 20px 20px 20px;
+}
+
+img#logoImg {
+	width: 220px;
+	height: 50px;
+}
+
+div#user-icon {
+	width: 50px;
+	height: 50px;
+	position: absolute;
+	top: 10px;
+	left: 95%;
+}
+
+div#action-bttns {
+	height: 50px;
+	margin-bottom: 20px;
+	text-align: right;
+}
+
+div#quick-create {
+	height: 200px;
+	margin-bottom: 20px;
+}
+
+#quick-create-scroll li{
+	height: 154px;
+	overflow-x: auto;
+	overflow-y:hidden;
+	display: inline;
+}
+
+#quick-create-scroll div{
+	display: inline;
+}
+
+div#recent-campaigns {
+	height: 275px;
+	margin-bottom: 20px;
+}
+
+div#recent-parcels {
+	height: 275px;
+	margin-bottom: 20px;
+}
+
+.debug {
+	border: solid 2px blue;
+}
+
+.button {
+	background-color: black;
+	color: white;
+	font-weight: 400;
+	font-size: 13pt;
+	text-align: center;
+	padding: 17px;
+	border-radius: 60px;
+}
+
+.button:hover{
+	background-color: #32CD33;
+	color: white;
+}
+
+.qcCard {
+	background-color: white;
+	height: 130px;
+	width: 250px;
+}
+
+div#app-window {
+	background-color: #ffffff;
+	width:800px;
+	height:600px;
+	position: fixed;
+  	top: 50%;
+ 	left: 50%;
+  	transform: translate(-50%, -50%);
+	border-radius: 12px;
+}
+
+.app-inner{
+	position: absolute;
+	padding: 0px 20px;
+	
+}
+
+#file-format-table{
+	width:700px;
+	border: 1px solid black;
+	border-collapse: collapse;
+	text-align: left;
+}
+
+#file-format-table * {
+	border: 1px solid black;
+	padding: 3px;
+}
+#submit-form {
+	width: 725px;
+	height: 100px
+}
+
+.upload-button {
+	position: absolute;
+	bottom: 3%;
+	right: 0;
+}
+
+.download-button {
+	position: absolute;
+	bottom: 0%;
+	right: 0;
+}
+
+#loading-icon {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+}
+
+.m-fadeOut {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s linear 300ms, opacity 300ms;
+}
+.m-fadeIn {
+  visibility: visible;
+  opacity: 1;
+  transition: visibility 0s linear 0s, opacity 300ms;
+}
+
+.table-container {
+	display: table;
+}
+
+.table-container-container {
+	display: block;
+	overflow: auto;
+	height: 400px;
+	white-space: nowrap;
+}
