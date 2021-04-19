@@ -33,7 +33,7 @@ class Main extends React.Component {
         waitingWindow.classList.remove("m-fadeOut");
 		    waitingWindow.classList.add("m-fadeIn");
 
-    fetch('http://localhost:5000/upload', {
+    fetch('http://10.125.147.142:5000/upload', {
       method: 'POST',
       body: data,
     }).then((response) => {
