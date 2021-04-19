@@ -114,21 +114,6 @@ class Main extends React.Component {
           updateLbl.classList.remove("btn-hover");
           updateLbl.innerHTML = "Upload Addresses";
         }, 3000);
-
-		    	   var headers = {
-         room: 'Room'.replace(/,/g, ''), // remove commas to avoid errors,
-         lname: "Last Name",
-         fname: "First Name",
-         pname: "Preferred Name",
-         email: "Email",
-         location: "Location",
-         results: "Results",
-         analysis: "Analysis"
-	   };
-
-	   var fileTitle = 'results'; // or 'my-unique-title'
-        exportCSVFile(headers, body, fileTitle);
-        renderResults(body);
       })
       .catch(error => {
 
