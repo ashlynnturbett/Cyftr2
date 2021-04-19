@@ -98,7 +98,7 @@ class Main extends React.Component {
       ev.preventDefault();
 
       const data = new FormData();
-      data.append('file', this.uploadInput.files[0]);
+      data.append('file', this.updateInput.files[0]);
 
       var updateLbl = document.getElementById("FU-label");
 
@@ -156,7 +156,7 @@ class Main extends React.Component {
   </form>
 
     const updateAddressesForm = <form onSubmit={this.handleUpdateFile}>
-      <input id='file-update' ref={(ref) => { this.uploadInput = ref; }} type='file' onChange={this.handleUpdateFile} style={{visibility: 'hidden'}}/>
+      <input id='file-update' ref={(ref) => { this.updateInput = ref; }} type='file' onChange={this.handleUpdateFile} style={{visibility: 'hidden'}}/>
         <div class='update-button'>
           <p style={{paddingBottom: '5px', color: '#757575'}}>Accepts .csv, .xlsx, .json</p>
           <label id="FU-label" for='file-update' class='button'>Upload Addresses</label>
