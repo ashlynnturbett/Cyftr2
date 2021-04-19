@@ -101,6 +101,8 @@ class Main extends React.Component {
       data.append('file', this.updateInput.files[0]);
 
       var updateLbl = document.getElementById("FU-label");
+	    
+	updateLbl.innerHTML = "Uploading...";
 
       fetch('http://localhost:5000/update', { // TODO: CHECK UPLOAD URL. NEEDS "UPDATE" ??
       method: 'POST',
