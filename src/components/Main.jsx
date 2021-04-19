@@ -2,6 +2,10 @@ import React from 'react';
 import logo from './resources/logo.png'
 import loader from './resources/rainbow-loader.gif'
 
+import uploadNav from './resources/uploadNav.png'
+import loadingNav from './resources/loadingNav.png'
+import completeNav from './resources/completeNav.png'
+
 class Main extends React.Component {
   constructor(props) {
     super(props);
@@ -13,6 +17,7 @@ class Main extends React.Component {
 
 
     this.handleUploadFile = this.handleUploadFile.bind(this);
+    this.handleUpdateFile = this.handleUpdateFile.bind(this);
 
   }
 
@@ -28,25 +33,35 @@ class Main extends React.Component {
     var waitingWindow = document.getElementById("verification-loading");
     var resultsWindow = document.getElementById("verification-complete");
 
+    var uploadNav = document.getElementById("uploadNav");
+    var loadingNav = document.getElementById("loadingNav");
+    var completeNav = document.getElementById("completeNav");
+
 	    	uploadWindow.classList.remove("m-fadeIn");
         uploadWindow.classList.add("m-fadeOut");
         waitingWindow.classList.remove("m-fadeOut");
 		    waitingWindow.classList.add("m-fadeIn");
 
-    fetch('http://10.125.147.142:5000/upload', {
+        uploadNav.classList.remove("m-fadeIn");
+        uploadNav.classList.add("m-fadeOut");
+        loadingNav.classList.remove("m-fadeOut");
+		    loadingNav.classList.add("m-fadeIn");
+
+    fetch('http://localhost:5000/upload', {
       method: 'POST',
       body: data,
     }).then((response) => {
       response.json().then((body) => {
 
-        var uploadWindow = document.getElementById("upload-window");
-		    var waitingWindow = document.getElementById("verification-loading");
-        var resultsWindow = document.getElementById("verification-complete");
-
 	    	waitingWindow.classList.remove("m-fadeIn");
         waitingWindow.classList.add("m-fadeOut");
         resultsWindow.classList.remove("m-fadeOut");
 		    resultsWindow.classList.add("m-fadeIn");
+
+        loadingNav.classList.remove("m-fadeIn");
+        loadingNav.classList.add("m-fadeOut");
+        completeNav.classList.remove("m-fadeOut");
+		    completeNav.classList.add("m-fadeIn");
 
 		    	   var headers = {
          room: 'Room'.replace(/,/g, ''), // remove commas to avoid errors,
@@ -59,6 +74,57 @@ class Main extends React.Component {
          analysis: "Analysis"
 	   };
 
+	   var fileTitle = 'results'; // or 'my-unique-title'
+        exportCSVFile(headers, body, fileTitle);
+        renderResults(body);
+      })
+      .catch(error => {
+
+        waitingWindow.classList.remove("m-fadeIn");
+        waitingWindow.classList.add("m-fadeOut");
+        uploadWindow.classList.remove("m-fadeOut");
+		    uploadWindow.classList.add("m-fadeIn");
+
+        loadingNav.classList.remove("m-fadeIn");
+        loadingNav.classList.add("m-fadeOut");
+        uploadNav.classList.remove("m-fadeOut");
+		    uploadNav.classList.add("m-fadeIn");
+
+        });
+      });
+    }
+    
+    handleUpdateFile(ev){
+      ev.preventDefault();
+
+      const data = new FormData();
+      data.append('file', this.uploadInput.files[0]);
+
+      var updateLbl = document.getElementById("FU-label");
+
+      fetch('http://localhost:5000/update', { // TODO: CHECK UPLOAD URL. NEEDS "UPDATE" ??
+      method: 'POST',
+      body: data,
+    }).then((response) => {
+      response.json().then((body) => {
+
+        updateLbl.classList.add("btn-hover");
+        updateLbl.innerHTML = "Upload Completed";
+        setTimeout(function(){
+          updateLbl.classList.remove("btn-hover");
+          updateLbl.innerHTML = "Upload Addresses";
+        }, 3000);
+
+		    	   var headers = {
+         room: 'Room'.replace(/,/g, ''), // remove commas to avoid errors,
+         lname: "Last Name",
+         fname: "First Name",
+         pname: "Preferred Name",
+         email: "Email",
+         location: "Location",
+         results: "Results",
+         analysis: "Analysis"
+	   };
 
 	   var fileTitle = 'results'; // or 'my-unique-title'
         exportCSVFile(headers, body, fileTitle);
@@ -66,12 +132,17 @@ class Main extends React.Component {
       })
       .catch(error => {
 
-        var uploadWindow = document.getElementById("upload-window");
-		    var waitingWindow = document.getElementById("verification-loading");
+        updateLbl.classList.add("btn-error");
+        updateLbl.innerHTML = "File Upload Failed";
+        setTimeout(function(){
+          updateLbl.classList.remove("btn-error");
+          updateLbl.innerHTML = "Upload Addresses";
+        }, 3000);
 
         });
       });
-    }
+
+    };
 
 
 
@@ -99,19 +170,66 @@ class Main extends React.Component {
     </div>
   </form>
 
+    const updateAddressesForm = <form onSubmit={this.handleUpdateFile}>
+      <input id='file-update' ref={(ref) => { this.uploadInput = ref; }} type='file' onChange={this.handleUpdateFile} style={{visibility: 'hidden'}}/>
+        <div class='update-button'>
+          <p style={{paddingBottom: '5px', color: '#757575'}}>Accepts .csv, .xlsx, .json</p>
+          <label id="FU-label" for='file-update' class='button'>Upload Addresses</label>
+        </div>
+      </form>
+
     return (
       <div>
         <div id = 'header'>
           <div id='logo'> <img id='logoImg' src={logo} alt='logo'></img></div>
-          <div id='user-icon' class='debug'></div>
+          {/* <div id='user-icon' class='debug'></div> */}
         </div>
         <div id = 'sidebar' >
-          <div id='nav'></div>
-          <div id='help'></div>
+          <div id='nav' class="m-fadeOut">
+            <div class="navDiv"><img id='uploadNav' src={uploadNav} alt='Upload Navigation' class="navImg m-fadeIn"></img></div>
+            <div class="navDiv"><img id='loadingNav' src={loadingNav} alt='Loading Navigation' class="navImg m-fadeOut"></img></div>
+            <div class="navDiv"><img id='completeNav' src={completeNav} alt='Complete Navigation' class="navImg m-fadeOut"></img></div>
+          </div>
+          {/* <div id='help'></div> */}
       </div>
       <div id = 'main' >
         <div id='app-window'>
-          <div id='upload-window' class='app-inner m-fadeIn'>
+          <div id='splash-window' class='app-inner m-fadeIn' style={{width: '95%'}}>
+            <h2>Welcome to Cyftr!</h2>
+            <span></span>
+            <div>
+              <label class="button verify-button" onClick={beginVerification}>Begin Verification</label>
+            </div>
+            <p>Begin the verification process by uploading your mailing list to Cyftr.</p>
+            <br></br>
+            <hr></hr>
+            <h3>Update Address(es)</h3>
+            <div>Upload new, accurate addresses to the Cyftr database.</div><div>Please format your file as shown below:</div>
+            <p><strong>CSV &amp; Excel</strong></p>
+            <table id='file-format-table'>
+              <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Address Line 1</th>
+                <th>Address Line 2</th>
+                <th>ZIP Code</th>
+              </tr>
+              <tr>
+                <td>John</td>
+                <td>Smith</td>
+                <td>110 Inner Campus Drive</td>
+                <td></td>
+                <td>78705</td>
+              </tr>
+            </table>
+            <p><strong>JSON</strong></p>
+            <p style={{fontFamily: 'monospace'}}>{JSONformat}</p>
+            <div id='update-addrs-form' class=''>
+              {updateAddressesForm}
+            </div>
+            
+          </div>
+          <div id='upload-window' class='app-inner m-fadeOut'>
             <h2>Mailing List Upload</h2>
             <p>Upload your mailing list below to submit it to our verification system.</p>
             <br></br>
@@ -279,6 +397,23 @@ function renderResults(body){
 
       }
 
+  function beginVerification() {
+
+    var splash = document.getElementById("splash-window");
+    var verification = document.getElementById("upload-window");
+    var nav = document.getElementById("nav");
+
+    splash.classList.remove("m-fadeIn");
+    splash.classList.add("m-fadeOut");
+    setTimeout(function(){
+      verification.classList.remove("m-fadeOut");
+      verification.classList.add("m-fadeIn");
+      nav.classList.remove("m-fadeOut");
+      nav.classList.add("m-fadeIn");
+    }, 1000);
+    
+  
+  }
 
 function showAccurate() {
 
