@@ -34,6 +34,18 @@ div#nav {
 	border-radius: 60px 60px 60px 60px;
 }
 
+.navDiv {
+	position: absolute;
+	bottom: 33%;
+	right: 33%;
+	height: 235px;
+}
+
+.navImg {
+	width: auto;
+	height: 100%;
+}
+
 div#help {
 	margin: 0 auto;
 	background-color: #FFFFFF;
@@ -117,6 +129,16 @@ div#recent-parcels {
 	color: white;
 }
 
+.btn-hover{
+	background-color: #32CD33;
+	color: white;
+}
+
+.btn-error{
+	background-color: #e72323;
+	color: white;
+}
+
 .qcCard {
 	background-color: white;
 	height: 130px;
@@ -162,6 +184,18 @@ div#app-window {
 	right: 0;
 }
 
+.update-button {
+	position: absolute;
+	bottom: 0%;
+	right: 3%;
+}
+
+.verify-button {
+	position: absolute;
+	bottom: 80%;
+	right: 3%;
+}
+
 .download-button {
 	position: absolute;
 	bottom: 0%;
@@ -195,4 +229,8 @@ div#app-window {
 	overflow: auto;
 	height: 400px;
 	white-space: nowrap;
+}
+
+hr {
+	border: 1px solid lightgray;
 }
